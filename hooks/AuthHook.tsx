@@ -41,28 +41,32 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(
     () =>
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          // Logged in...
-          setUser(user);
-          setLoading(false);
-        } else {
-          // Not logged in...
-          setUser(null);
-          setLoading(true);
-          router.push("/signin");
-        }
+      // Add an observer for changes to the user's sign-in state.
+      // and return an unsubscribe function to clean up
+      onAuthStateChanged(
+        auth,
+        // callback triggered on change
+        (user) => {
+          if (user) {
+            // Logged in...
+            setUser(user);
+            setLoading(false);
+          } else {
+            // Not logged in...
+            setUser(null);
+            setLoading(true);
+            router.push("/signin");
+          }
 
-        setInitialLoading(false);
-      }),
+          setInitialLoading(false);
+        }
+      ),
     [auth]
   );
 
   const handleFirebaseError = (error: any) => {
     if (error.code == "auth/email-already-in-use") {
       alert("The email address is already in use");
-    } else if (error.code == "auth/invalid-email") {
-      alert("The email address is not valid.");
     } else if (error.code == "auth/operation-not-allowed") {
       alert("Operation not allowed.");
     } else if (error.code == "auth/weak-password") {
@@ -89,7 +93,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       })
       .catch((error: Error) => {
         setUser(null);
-        console.log("error from sign up");
         handleFirebaseError(error);
       })
       .finally(() => setLoading(false));
@@ -109,7 +112,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       })
       .catch((error: Error) => {
         setUser(null);
-        console.log("error from sign in");
         handleFirebaseError(error);
       })
       .finally(() => setLoading(false));

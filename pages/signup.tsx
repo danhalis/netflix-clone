@@ -23,7 +23,6 @@ function Login() {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (!submit) return;
-    console.log("Submit sign up");
     await signUp(data.email, data.password);
     setSubmit(false);
   };
@@ -44,7 +43,7 @@ function Login() {
       "
     >
       <Head>
-        <title>Netflix- Sign Up</title>
+        <title>Netflix - Sign Up</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
