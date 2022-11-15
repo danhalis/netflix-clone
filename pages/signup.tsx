@@ -44,7 +44,7 @@ function Login() {
       "
     >
       <Head>
-        <title>Netflix</title>
+        <title>Netflix- Sign Up</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -149,9 +149,13 @@ function Login() {
         {/* Sign In redirect */}
         <div className="text-[gray]">
           Already had an account?{" "}
-          <button className="text-white hover:underline" onClick={onSignIn}>
+          <div className="
+            inline-block
+          text-white
+            cursor-pointer
+            hover:underline" onClick={onSignIn}>
             Sign in here
-          </button>
+          </div>
         </div>
       </form>
     </div>
