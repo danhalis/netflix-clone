@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { FaPlay } from 'react-icons/fa';
 import { InformationCircleIcon } from '@heroicons/react/solid';
 
-import { IMAGE_BASE_URL } from '../constants/tmdbApi';
+import { OG_SIZE_IMAGE_BASE_URL } from '../constants/tmdbApi';
 import { Movie } from '../typings';
 
 interface Props {
@@ -34,11 +34,12 @@ function Banner({ netflixOriginals }: Props) {
         {
           movie &&
           <Image
-          src={`${IMAGE_BASE_URL}${movie.backdrop_path || movie.poster_path}`}
-          alt=""
-          style={{objectFit: "cover"}}
-          fill
-        />
+            src={`${OG_SIZE_IMAGE_BASE_URL}${movie.backdrop_path || movie.poster_path}`}
+            alt=""
+            className="object-cover"
+            fill
+            sizes="auto"
+          />
         }
 			</div>
 
@@ -80,4 +81,4 @@ function Banner({ netflixOriginals }: Props) {
   );
 }
 
-export default Banner;
+export default Banner
