@@ -41,4 +41,15 @@
 			hover:opacity-75
 			md:px-8 md:py-2.5 md:text-xl;
 	}
+
+	.input {
+		@apply
+			w-full
+			px-5 py-3.5
+			rounded
+			outline-none
+			bg-[#333]
+			placeholder-[gray]
+			focus:bg-[#454545];
+	}
 }

@@ -1,13 +1,14 @@
-import Head from 'next/head';
+import Head from "next/head";
 
-import Navbar from '../components/Navbar';
-import Banner from '../components/Banner';
-import Row from '../components/Row';
+import Navbar from "../components/Navbar";
+import Banner from "../components/Banner";
+import Row from "../components/Row";
 
-import { Movie } from '../typings';
-import requests from '../utils/requests';
+import { Movie } from "../typings";
+import requests from "../utils/requests";
+import useAuth from "../hooks/AuthHook";
 
-interface Props { 
+interface Props {
   netflixOriginals: Movie[];
   trendingNow: Movie[];
   topRated: Movie[];
@@ -16,7 +17,7 @@ interface Props {
   horrorMovies: Movie[];
   romanceMovies: Movie[];
   documentaries: Movie[];
-};
+}
 
 const Home = ({
   netflixOriginals,
@@ -28,22 +29,30 @@ const Home = ({
   romanceMovies,
   documentaries,
 }: Props) => {
+  const { logOut, loading } = useAuth();
+
+  if (loading) return null;
+
   return (
-    <div className="
-      relative h-screen bg-gradient-to-b
-      lg:h-[140vh]
-    ">
+    <div
+      className="
+        relative h-screen bg-gradient-to-b
+        lg:h-[140vh]
+      "
+    >
       <Head>
         <title>Netflix - Home</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar />
-      <main className="
-        relative
-        pl-4 pb-24
-        lg:space-y-24 lg:pl-16
-      ">
+      <Navbar logOut={logOut} />
+      <main
+        className="
+          relative
+          pl-4 pb-24
+          lg:space-y-24 lg:pl-16
+        "
+      >
         <Banner netflixOriginals={netflixOriginals} />
         <section className="md:space-y-24">
           <Row title="Trending Now" movies={trendingNow} />
@@ -56,7 +65,7 @@ const Home = ({
         </section>
       </main>
     </div>
-  )
+  );
 };
 
 export const getServerSideProps = async () => {
@@ -78,7 +87,7 @@ export const getServerSideProps = async () => {
     fetch(requests.fetchHorrorMovies).then((res) => res.json()),
     fetch(requests.fetchRomanceMovies).then((res) => res.json()),
     fetch(requests.fetchDocumentaries).then((res) => res.json()),
-  ])
+  ]);
 
   return {
     props: {
@@ -91,7 +100,7 @@ export const getServerSideProps = async () => {
       romanceMovies: romanceMovies.results,
       documentaries: documentaries.results,
     },
-  }
+  };
 };
 
-export default Home
+export default Home;
