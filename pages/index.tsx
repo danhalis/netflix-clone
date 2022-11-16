@@ -7,6 +7,7 @@ import Row from "../components/Row";
 import { Movie } from "../typings";
 import requests from "../utils/requests";
 import useAuth from "../hooks/AuthHook";
+import Loading from "../components/Loading";
 
 interface Props {
   netflixOriginals: Movie[];
@@ -31,7 +32,10 @@ const Home = ({
 }: Props) => {
   const { logOut, loading } = useAuth();
 
-  if (loading) return null;
+  if (loading) 
+    return (
+      <Loading />
+    );
 
   return (
     <div

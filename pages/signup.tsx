@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import Loading from "../components/Loading";
 import useAuth from "../hooks/AuthHook";
 
 interface Inputs {
@@ -10,7 +11,7 @@ interface Inputs {
   password: string;
 }
 
-function Login() {
+function SignUp() {
   const {
     register,
     handleSubmit,
@@ -19,7 +20,12 @@ function Login() {
 
   const [submit, setSubmit] = useState(false);
 
-  const { signUp } = useAuth();
+  const { signUp, loading } = useAuth();
+
+  if (loading)
+    return (
+      <Loading />
+    );
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (!submit) return;
@@ -161,4 +167,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default SignUp;

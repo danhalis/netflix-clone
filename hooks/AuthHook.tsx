@@ -33,35 +33,41 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [initialLoading, setInitialLoading] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User|null>(null);
   const [error, setError] = useState(null);
   const router = useRouter();
 
+  // Set an initializing state while Firebase connects
+  // This state will block UI from being rendered until
+  // the Firebase is connected 
+  const [initializing, setInitializing] = useState(true);
   useEffect(
     () =>
-      // Add an observer for changes to the user's sign-in state.
+      // Add an observer for changes to the user's auth state.
       // and return an unsubscribe function to clean up
-      onAuthStateChanged(
-        auth,
-        // callback triggered on change
+      auth.onAuthStateChanged(
+        // Once a connection with Firebase is established
+        // callback will be triggered when the auth state changes
         (user) => {
+          // If the user is logged in
           if (user) {
-            // Logged in...
             setUser(user);
             setLoading(false);
-          } else {
-            // Not logged in...
+          }
+          // If the user is not logged in
+          else {
             setUser(null);
-            setLoading(true);
+            setLoading(false);
             router.push("/signin");
           }
 
-          setInitialLoading(false);
+          // At this point, we have the user's sign-in state
+          // Unblock UI rendering
+          setInitializing(false);
         }
       ),
-    [auth]
+    []
   );
 
   const handleFirebaseError = (error: any) => {
@@ -126,6 +132,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     await signOut(auth)
       .then(() => {
         setUser(null);
+        router.push("/signin");
         success = true;
       })
       .catch((error: Error) => handleFirebaseError(error))
@@ -148,7 +155,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   return (
     <AuthContext.Provider value={memoizedValue}>
-      {!initialLoading && children}
+      {!initializing && children}
     </AuthContext.Provider>
   );
 };
