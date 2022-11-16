@@ -20,13 +20,17 @@ function SignIn() {
 
   const [submit, setSubmit] = useState(false);
 
-  const { logIn, loading } = useAuth();
+  const { logIn, authenticating } = useAuth();
+  const [signInSuccess, setSignInSuccess] = useState(false);
 
-  if (loading) return <Loading />;
+  // If the login process is happening
+  // or if the user has logged in but the browser is still redirecting
+  if (authenticating || signInSuccess) return <Loading />;
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (!submit) return;
-    await logIn(data.email, data.password);
+    // Sign in and return success state
+    setSignInSuccess(await logIn(data.email, data.password));
     setSubmit(false);
   };
 

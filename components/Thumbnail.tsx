@@ -13,12 +13,12 @@ function Thumbnail({ thumbnailRef, movie }: Props) {
     <div
       ref={thumbnailRef}
       className="
-			relative
-			h-28 min-w-[180px]
-			cursor-pointer
-			transition duration-200 ease-out
-			md:h-36 md:min-w-[260px] md:hover:scale-105
-		"
+        relative
+        h-28 min-w-[180px]
+        cursor-pointer
+        transition duration-200 ease-out
+        md:h-36 md:min-w-[260px] md:hover:scale-105
+      "
     >
       <Image
         src={`${CONFIG_SIZE_IMAGE_BASE_URL}${

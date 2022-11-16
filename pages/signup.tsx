@@ -20,13 +20,17 @@ function SignUp() {
 
   const [submit, setSubmit] = useState(false);
 
-  const { signUp, loading } = useAuth();
+  const { signUp, authenticating } = useAuth();
+  const [signUpSuccess, setSignUpSuccess] = useState(false);
 
-  if (loading) return <Loading />;
+  // If the sign up process is happening
+  // or if the user has signed up but the browser is still redirecting
+  if (authenticating || signUpSuccess) return <Loading />;
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (!submit) return;
-    await signUp(data.email, data.password);
+    // Sign up and return success state
+    setSignUpSuccess(await signUp(data.email, data.password));
     setSubmit(false);
   };
 

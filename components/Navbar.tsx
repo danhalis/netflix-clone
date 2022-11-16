@@ -5,7 +5,7 @@ import Link from "next/link";
 import { SearchIcon, BellIcon } from "@heroicons/react/solid";
 
 interface Props {
-  logOut: () => Promise<boolean>;
+  logOut: () => Promise<void>;
 }
 
 function Navbar({ logOut }: Props) {
@@ -27,9 +27,9 @@ function Navbar({ logOut }: Props) {
     <header className={`${isScrolled && "bg-[#141414]"}`}>
       <div
         className="
-				flex items-center space-x-2
-				md:space-x-10
-			"
+          flex items-center space-x-2
+          md:space-x-10
+        "
       >
         <img
           src="http://rb.gy/ulxxee"
@@ -39,9 +39,9 @@ function Navbar({ logOut }: Props) {
         />
         <ul
           className="
-					hidden space-x-4
-					md:flex
-				"
+            hidden space-x-4
+            md:flex
+          "
         >
           <li className="nav-link">Home</li>
           <li className="nav-link">TV Shows</li>

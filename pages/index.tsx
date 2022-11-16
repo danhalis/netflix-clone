@@ -8,6 +8,7 @@ import { Movie } from "../typings";
 import requests from "../utils/requests";
 import useAuth from "../hooks/AuthHook";
 import Loading from "../components/Loading";
+import { useState } from "react";
 
 interface Props {
   netflixOriginals: Movie[];
@@ -30,9 +31,17 @@ const Home = ({
   romanceMovies,
   documentaries,
 }: Props) => {
-  const { logOut, loading } = useAuth();
+  const { logOut, authenticating } = useAuth();
+  const [logOutSuccess, setLogOutSuccess] = useState(false);
 
-  if (loading) return <Loading />;
+  // If the log out process is happening
+  // or if the user has signed out but the browser is still redirecting
+  if (authenticating || logOutSuccess) return <Loading />;
+
+  const handleLogOut = async () => {
+    // Sign out and return success state
+    setLogOutSuccess(await logOut());
+  }
 
   return (
     <div
@@ -46,7 +55,7 @@ const Home = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar logOut={logOut} />
+      <Navbar logOut={handleLogOut} />
       <main
         className="
           relative

@@ -16,7 +16,7 @@ interface IAuth {
   logIn: (email: string, password: string) => Promise<boolean>;
   logOut: () => Promise<boolean>;
   error: string | null;
-  loading: boolean;
+  authenticating: boolean;
 }
 
 const AuthContext = createContext<IAuth>({
@@ -25,7 +25,7 @@ const AuthContext = createContext<IAuth>({
   logIn: async () => true,
   logOut: async () => true,
   error: null,
-  loading: false,
+  authenticating: false,
 });
 
 interface AuthProviderProps {
@@ -33,7 +33,7 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [loading, setLoading] = useState(false);
+  const [authenticating, setAuthenticating] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState(null);
   const router = useRouter();
@@ -53,12 +53,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           // If the user is logged in
           if (user) {
             setUser(user);
-            setLoading(false);
+            setAuthenticating(false);
           }
           // If the user is not logged in
           else {
             setUser(null);
-            setLoading(false);
+            setAuthenticating(false);
+            // Redirect to log in page
             router.push("/signin");
           }
 
@@ -88,12 +89,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const signUp = async (email: string, password: string) => {
-    setLoading(true);
+    setAuthenticating(true);
 
     let success = false;
     await createUserWithEmailAndPassword(auth, email, password)
       .then((userCreds) => {
         setUser(userCreds.user);
+        // Redirect to home page
         router.push("/");
         success = true;
       })
@@ -101,18 +103,19 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setUser(null);
         handleFirebaseError(error);
       })
-      .finally(() => setLoading(false));
+      .finally(() => setAuthenticating(false));
 
     return success;
   };
 
   const logIn = async (email: string, password: string) => {
-    setLoading(true);
+    setAuthenticating(true);
 
     let success = false;
     await signInWithEmailAndPassword(auth, email, password)
       .then((userCreds) => {
         setUser(userCreds.user);
+        // Redirect to home page
         router.push("/");
         success = true;
       })
@@ -120,23 +123,24 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         setUser(null);
         handleFirebaseError(error);
       })
-      .finally(() => setLoading(false));
+      .finally(() => setAuthenticating(false));
 
     return success;
   };
 
   const logOut = async () => {
-    setLoading(true);
+    setAuthenticating(true);
 
     let success = false;
     await signOut(auth)
       .then(() => {
         setUser(null);
+        // Redirect to log in page
         router.push("/signin");
         success = true;
       })
       .catch((error: Error) => handleFirebaseError(error))
-      .finally(() => setLoading(false));
+      .finally(() => setAuthenticating(false));
 
     return success;
   };
@@ -147,10 +151,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       signUp,
       logIn,
       logOut,
-      loading,
+      authenticating,
       error,
     }),
-    [user, loading, error]
+    [user, authenticating, error]
   );
 
   return (

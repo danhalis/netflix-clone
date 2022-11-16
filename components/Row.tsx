@@ -60,18 +60,18 @@ function Row({ title, movies }: Props) {
   return (
     <div
       className="
-		h-40 space-y-0.5
-		md:space-y-2
-	"
+        h-40 space-y-0.5
+        md:space-y-2
+      "
     >
       <h2
         className="
-			w-56
-			text-sm font-semibold text-[#e5e5e5]
-			cursor-pointer
-			transition duration-200 hover:text-white
-			md:text-2xl
-		"
+          w-56
+          text-sm font-semibold text-[#e5e5e5]
+          cursor-pointer
+          transition duration-200 hover:text-white
+          md:text-2xl
+        "
       >
         {title}
       </h2>
@@ -79,28 +79,28 @@ function Row({ title, movies }: Props) {
         <ChevronLeftIcon
           ref={leftButton}
           className="
-				absolute top-0 bottom-0 left-2
-				z-40
-				h-9 w-9
-				m-auto
-				cursor-pointer
-				opacity-0
-				transition hover:scale-125 group-hover:opacity-100
-				hidden
-			"
+            absolute top-0 bottom-0 left-2
+            z-40
+            h-9 w-9
+            m-auto
+            cursor-pointer
+            opacity-0
+            transition hover:scale-125 group-hover:opacity-100
+            hidden
+          "
           onClick={() => onArrowClick(true)}
         />
 
         <div
           ref={rowRef}
           className="
-				flex items-center
-				space-x-0.5
-				overflow-x-scroll
-				scrollbar-hide
-				md:space-x-2.5
-				md:p-2
-			"
+            flex items-center
+            space-x-0.5
+            overflow-x-scroll
+            scrollbar-hide
+            md:space-x-2.5
+            md:p-2
+          "
           onScroll={onRowScroll}
         >
           {movies.map((movie) => {
@@ -113,14 +113,14 @@ function Row({ title, movies }: Props) {
         <ChevronRightIcon
           ref={rightButton}
           className="
-				absolute top-0 bottom-0 right-2
-				z-40
-				h-9 w-9
-				m-auto
-				cursor-pointer
-				opacity-0
-				transition hover:scale-125 group-hover:opacity-100
-			"
+            absolute top-0 bottom-0 right-2
+            z-40
+            h-9 w-9
+            m-auto
+            cursor-pointer
+            opacity-0
+            transition hover:scale-125 group-hover:opacity-100
+          "
           onClick={() => onArrowClick(false)}
         />
       </div>
