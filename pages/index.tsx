@@ -32,10 +32,7 @@ const Home = ({
 }: Props) => {
   const { logOut, loading } = useAuth();
 
-  if (loading) 
-    return (
-      <Loading />
-    );
+  if (loading) return <Loading />;
 
   return (
     <div

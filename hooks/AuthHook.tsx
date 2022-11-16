@@ -34,13 +34,13 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<User|null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState(null);
   const router = useRouter();
 
   // Set an initializing state while Firebase connects
   // This state will block UI from being rendered until
-  // the Firebase is connected 
+  // the Firebase is connected
   const [initializing, setInitializing] = useState(true);
   useEffect(
     () =>

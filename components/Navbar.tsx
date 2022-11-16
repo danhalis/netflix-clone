@@ -17,7 +17,7 @@ function Navbar({ logOut }: Props) {
 
     window.addEventListener("scroll", handleScroll);
 
-		// Return clean up function
+    // Return clean up function
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };

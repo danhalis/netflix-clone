@@ -22,10 +22,7 @@ function SignIn() {
 
   const { logIn, loading } = useAuth();
 
-  if (loading)
-    return (
-      <Loading />
-    );
+  if (loading) return <Loading />;
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (!submit) return;
@@ -154,12 +151,15 @@ function SignIn() {
         {/* Sign Up redirect */}
         <div className="text-[gray]">
           New to Netflix?{" "}
-          <div className="
+          <div
+            className="
             inline-block
           text-white
             cursor-pointer
             hover:underline
-          " onClick={onSignUp}>
+          "
+            onClick={onSignUp}
+          >
             Sign up now
           </div>
         </div>

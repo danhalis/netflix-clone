@@ -22,10 +22,7 @@ function SignUp() {
 
   const { signUp, loading } = useAuth();
 
-  if (loading)
-    return (
-      <Loading />
-    );
+  if (loading) return <Loading />;
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (!submit) return;
@@ -154,11 +151,15 @@ function SignUp() {
         {/* Sign In redirect */}
         <div className="text-[gray]">
           Already had an account?{" "}
-          <div className="
+          <div
+            className="
             inline-block
           text-white
             cursor-pointer
-            hover:underline" onClick={onSignIn}>
+            hover:underline
+          "
+            onClick={onSignIn}
+          >
             Sign in here
           </div>
         </div>
